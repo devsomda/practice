@@ -1,0 +1,51 @@
+.parent {
+    padding: 5px 50px;
+  }
+  
+  .parent :first-child {
+    color: red;
+  }
+  
+  .parent :first-of-type {
+    background-color: yellow;
+  }
+  
+  .parent2 {
+    background-color: antiquewhite;
+    padding: 10px;
+  }
+  
+  .parent2 div:not(.not-item){
+    background-color: white;
+    margin: 5px;
+  }
+  
+  /* article h4,
+  article h6,
+  article p {
+    color: blue
+  } */
+  
+  article :where(h4, h6, p) {
+    color: blue
+  }
+  
+  article :is(p) {
+    color: green
+  }
+  
+  /* .parent3 :has(h6){
+    color: red;
+  } */
+  
+  /* .parent3:has(>h6){
+    color: burlywood;
+  } */
+  
+  .has-div:has(+h6) {
+    color: blue;
+  }
+  
+  /* .parent3:not(:has(h6)){
+    color: red
+  } */
