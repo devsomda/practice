@@ -6,7 +6,7 @@ import VersionAlert from "./VersionAlert";
 export default function Routers() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/*" element={<MainPage />} />
       <Route path="/practice/css-pseudo-class" element={<CssPseudoClass />} />
       <Route path="/practice/version-alert" element={<VersionAlert />} />
     </Routes>
