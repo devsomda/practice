@@ -1,8 +1,9 @@
 export default function MainPage() {
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <h2>MainPage</h2>
-      <a href="/study/css-pseudo-class">바로가기1</a>
+      <a href="/practice/css-pseudo-class">Practice1. css-pseudo-class</a>
+      <a href="/practice/version-alert">Practice2. version-alert</a>
     </div>
   );
 }
