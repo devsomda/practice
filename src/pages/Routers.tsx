@@ -5,7 +5,7 @@ import CssPseudoClass from "./CssPseudoClass";
 export default function Routers() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/*" element={<MainPage />} />
       <Route path="/study/css-pseudo-class" element={<CssPseudoClass />} />
     </Routes>
   );
