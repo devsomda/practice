@@ -1,3 +1,4 @@
+import BuildHashPlugin from 'build-hash-webpack-plugin';
 const CracoAlias = require("craco-alias")
 
 module.exports = {
@@ -10,8 +11,6 @@ module.exports = {
         '@styles': './src/styles',
       },
     },
+    new BuildHashPlugin({filename: 'version.json'})
   ],
-//   babel: {
-//     plugins: ["babel-plugin-styled-components"],
-//   },
 }
