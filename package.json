@@ -23,7 +23,8 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "postbuild": "node postbuild-script.js"
   },
   "eslintConfig": {
     "extends": [
