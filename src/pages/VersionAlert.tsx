@@ -29,36 +29,47 @@ export default function VersionAlert() {
   // Approach2
   const [s3version, setS3Version] = useState("");
 
-  const getS3Version = () => {
+  const accessKeyId = process.env.REACT_APP_S3_ACCEES_KEY;
+  const secretAccessKey = process.env.REACT_APP_S3_SECRET_ACCEES_KEY;
+
+  const getS3Version = async () => {
     // AWS 설정
-    AWS.config.update({ region: "ap-northeast-2" }); // 버킷의 리전으로 대체
+    AWS.config.update({
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
+      region: "ap-northeast-2",
+    });
+
     const s3 = new AWS.S3();
 
     // S3에서 파일 읽어오기
     const params = {
-      Bucket: "your-bucket",
+      Bucket: "version-file-bucket",
       Key: "version.txt",
     };
 
-    s3.getObject(params, (err, data) => {
-      if (err) {
-        console.error("Error", err);
-      } else {
-        const versionText = data?.Body?.toString("utf-8");
-        setS3Version(versionText ? versionText : "");
-      }
-    });
+    await s3
+      .getObject(params, (err, data) => {
+        if (err) {
+          console.error("Error", err);
+        } else {
+          console.log(data);
+          const versionText = data?.Body?.toString("utf-8");
+          setS3Version(versionText ? versionText : "");
+
+          if (packageVersion !== versionText) {
+            alert(
+              `version Changed!, package: ${packageVersion}, s3: ${versionText}`
+            );
+          }
+        }
+      })
+      .promise();
   };
 
   useEffect(() => {
     getS3Version();
   }, [state]);
-
-  useEffect(() => {
-    if (packageVersion !== s3version) {
-      alert(`version Changed!, package: ${packageVersion}, s3: ${s3version}`);
-    }
-  }, [s3version]);
 
   return (
     <div>
