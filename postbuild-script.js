@@ -7,7 +7,8 @@ const secretAccessKey = process.env.REACT_APP_S3_SECRET_ACCEES_KEY;
 
 // AWS 설정
 const region = 'ap-northeast-2'; // 리전 설정
-AWS.config.update({ accessKeyId, secretAccessKey, region }); // AWS 구성 업데이트
+// AWS.config.update({ accessKeyId, secretAccessKey, region }); // AWS 구성 업데이트
+AWS.config.update({ region }); // AWS 구성 업데이트
 const s3 = new AWS.S3();
 
 // 버전 정보를 담은 텍스트 파일 생성
