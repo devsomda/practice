@@ -6,6 +6,7 @@ export default function VersionAlert() {
   // Approach 1
   const [state, setState] = useState("");
   const localVersion = window.localStorage.getItem("version");
+  const packageVersion = packageJson.version;
 
   useEffect(() => {
     if (!localVersion || localVersion !== packageJson.version) {
@@ -28,7 +29,7 @@ export default function VersionAlert() {
   // Approach2
   const [s3version, setS3Version] = useState("");
 
-  useEffect(() => {
+  const getS3Version = () => {
     // AWS 설정
     AWS.config.update({ region: "ap-northeast-2" }); // 버킷의 리전으로 대체
     const s3 = new AWS.S3();
@@ -47,14 +48,15 @@ export default function VersionAlert() {
         setS3Version(versionText ? versionText : "");
       }
     });
+  };
+
+  useEffect(() => {
+    getS3Version();
   }, [state]);
 
   useEffect(() => {
-    if (!localVersion || localVersion !== s3version) {
-      window.localStorage.setItem("version", packageJson.version);
-    }
-    if (localVersion !== s3version) {
-      alert(`version Changed!, local: ${localVersion}, s3: ${s3version}`);
+    if (packageVersion !== s3version) {
+      alert(`version Changed!, package: ${packageVersion}, s3: ${s3version}`);
     }
   }, [s3version]);
 
@@ -62,7 +64,7 @@ export default function VersionAlert() {
     <div>
       <h2>LocalStorage</h2>
       <p>LocalStorage Verion: {localVersion}</p>
-      <p>Package Version: {packageJson.version}</p>
+      <p>Package Version: {packageVersion}</p>
       <button type="button" onClick={refreshTrigger}>
         refresh action trigger
       </button>
@@ -72,7 +74,11 @@ export default function VersionAlert() {
       <p>State: {state}</p>
       <hr />
       <h2>S3</h2>
+      <button type="button" onClick={getS3Version}>
+        get S3 version!
+      </button>
       <p>S3 Version: {s3version}</p>
+      <p>Package Version: {packageVersion}</p>
     </div>
   );
 }
