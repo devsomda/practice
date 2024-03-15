@@ -65,6 +65,22 @@ export default function VersionAlert() {
   }, [s3version]);
 
   useEffect(() => {
+    // 탭이 활성화되었을 때 visibilitychange 이벤트를 감지하여 getS3Version 함수를 호출합니다.
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        // getS3Version();
+        console.log("실행");
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너를 제거합니다.
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  });
+
+  useEffect(() => {
     getS3Version();
   }, [state]);
 
