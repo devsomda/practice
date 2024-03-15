@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import packageJson from "../../package.json";
+import versionJson from "../../version.json";
 import AWS from "aws-sdk";
 
 export default function VersionAlert() {
@@ -71,6 +72,10 @@ export default function VersionAlert() {
     getS3Version();
   }, [state]);
 
+  // Approach 3.
+  const textVersion = versionJson.version;
+  console.log(textVersion);
+
   return (
     <div>
       <h2>LocalStorage</h2>
@@ -90,6 +95,9 @@ export default function VersionAlert() {
       </button>
       <p>S3 Version: {s3version}</p>
       <p>Package Version: {packageVersion}</p>
+      <hr />
+      <h2>src/version.json : 빌드할 때 package.json 버전 등록</h2>
+      <p>build folder version: {textVersion}</p>
     </div>
   );
 }
