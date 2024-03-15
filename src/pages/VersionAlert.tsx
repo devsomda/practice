@@ -68,7 +68,7 @@ export default function VersionAlert() {
     // 탭이 활성화되었을 때 visibilitychange 이벤트를 감지하여 getS3Version 함수를 호출합니다.
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        // getS3Version();
+        getS3Version();
         console.log("실행");
       }
     };
@@ -80,9 +80,9 @@ export default function VersionAlert() {
     };
   });
 
-  useEffect(() => {
-    getS3Version();
-  }, [state]);
+  // useEffect(() => {
+  //   getS3Version();
+  // }, [state]);
 
   return (
     <div>
