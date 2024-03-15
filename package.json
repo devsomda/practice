@@ -1,6 +1,6 @@
 {
   "name": "practice",
-  "version": "0.2.2",
+  "version": "0.2.1",
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build && node -e \"const fs = require('fs'); const packageJson = require('./package.json'); const versionJson = require('./version.json'); versionJson.version = packageJson.version; fs.writeFileSync('./version.json', JSON.stringify(versionJson, null, 2));\"",
+    "build": "craco build",
     "test": "craco test",
     "postbuild": "node postbuild-script.js"
   },

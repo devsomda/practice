@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import packageJson from "../../package.json";
-import versionJson from "../../version.json";
 import AWS from "aws-sdk";
 
 export default function VersionAlert() {
@@ -12,9 +11,6 @@ export default function VersionAlert() {
   useEffect(() => {
     if (!localVersion || localVersion !== packageJson.version) {
       window.localStorage.setItem("version", packageJson.version);
-    }
-    if (localVersion !== packageJson.version) {
-      alert("version Changed!");
     }
   }, []);
 
@@ -57,31 +53,36 @@ export default function VersionAlert() {
           console.log(data);
           const versionText = data?.Body?.toString("utf-8");
           setS3Version(versionText ? versionText : "");
-
-          if (packageVersion !== versionText) {
-            alert(
-              `version Changed!, package: ${packageVersion}, s3: ${versionText}`
-            );
-          }
         }
       })
       .promise();
   };
 
   useEffect(() => {
+    if (s3version && packageVersion !== s3version) {
+      alert(`version Changed!, package: ${packageVersion}, s3: ${s3version}`);
+    }
+  }, [s3version]);
+
+  useEffect(() => {
     getS3Version();
   }, [state]);
 
-  // Approach 3.
-  const textVersion = versionJson.version;
-  console.log(textVersion);
-
   return (
     <div>
+      <p>
+        버전 업데이트 시, 웹 사이트 새로고침을 하지 않아도 버전 업데이트 알림이
+        뜨는지 확인합니다.
+      </p>
       <h2>LocalStorage</h2>
+      <p>Package.json의 버전 정보를 localstorage에 저장합니다.</p>
       <p>LocalStorage Verion: {localVersion}</p>
       <p>Package Version: {packageVersion}</p>
-      <button type="button" onClick={refreshTrigger}>
+      <button
+        type="button"
+        onClick={refreshTrigger}
+        style={{ marginRight: "10px" }}
+      >
         refresh action trigger
       </button>
       <button type="button" onClick={stateChangeHandler}>
@@ -90,14 +91,17 @@ export default function VersionAlert() {
       <p>State: {state}</p>
       <hr />
       <h2>S3</h2>
+      <p>
+        기존 이용 중인 package.json 버전과, 업데이트 정보를 담은 S3의 버전이
+        일치하는지 확인합니다.
+      </p>
+      <p>S3 버전정보 받는 방법 1. state가 바뀔 때 S3에 정보를 요청합니다.</p>
+      <p>S3 버전정보 받는 방법 2. 아래 버튼으로 S3에 정보를 요청합니다.</p>
       <button type="button" onClick={getS3Version}>
         get S3 version!
       </button>
       <p>S3 Version: {s3version}</p>
       <p>Package Version: {packageVersion}</p>
-      <hr />
-      <h2>src/version.json : 빌드할 때 package.json 버전 등록</h2>
-      <p>build folder version: {textVersion}</p>
     </div>
   );
 }
