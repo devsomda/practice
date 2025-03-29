@@ -5,6 +5,7 @@ export default function MainPage() {
       <a href="/practice/css-pseudo-class">Practice1. css-pseudo-class</a>
       <a href="/practice/version-alert">Practice2. version-alert</a>
       <a href="/practice/todo">Practice3. Todo App (React + Expree + Mysql)</a>
+      <a href="/practice/useDefferedValue">Practice4. useDefferedValue Hook</a>
     </div>
   );
 }
